@@ -1,16 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { withCookies, Cookies } from "react-cookie";
 import { login } from "../../actions/auth";
 import Messages from "../Messages";
-import { object, func } from "prop-types";
+import { object, instanceOf } from "prop-types";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapMessageContextToProps,
+  mapSessionContextToProps,
+  messageContextPropType,
+  sessionContextPropType
+} from "../context_helper";
 
 class Login extends React.Component {
   static propTypes = {
     history: object.isRequired,
-    messages: object.isRequired,
-    onMount: func,
-    onUnmount: func
+    cookies: instanceOf(Cookies).isRequired,
+    ...messageContextPropType,
+    ...sessionContextPropType
   };
 
   constructor(props) {
@@ -18,16 +25,8 @@ class Login extends React.Component {
     this.state = { email: "", password: "" };
   }
 
-  componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.props.history);
-    }
-  }
-
   componentWillUnmount() {
-    if (this.props.onUnmount) {
-      this.props.onUnmount(this.props.history);
-    }
+    this.props.messageContext.clearMessages();
   }
 
   handleChange(event) {
@@ -45,14 +44,15 @@ class Login extends React.Component {
 
   handleLogin(event) {
     event.preventDefault();
-    this.props.dispatch(
-      login({
-        email: this.state.email,
-        password: this.state.password,
-        history: this.props.history,
-        from: this.getRedirectReferer()
-      })
-    );
+    login({
+      email: this.state.email,
+      password: this.state.password,
+      history: this.props.history,
+      cookies: this.props.cookies,
+      from: this.getRedirectReferer(),
+      messageContext: this.props.messageContext,
+      sessionContext: this.props.sessionContext
+    });
   }
 
   render() {
@@ -60,7 +60,7 @@ class Login extends React.Component {
       <div className="login-container container">
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
+            <Messages messages={this.props.messageContext.messages} />
             <form onSubmit={this.handleLogin.bind(this)}>
               <legend>Log In</legend>
               <div className="form-group">
@@ -110,10 +110,13 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapContextToProps = context => {
   return {
-    messages: state.messages
+    ...mapSessionContextToProps(context),
+    ...mapMessageContextToProps(context)
   };
 };
 
-export default connect(mapStateToProps)(Login);
+export default subscribe(ProviderContext, mapContextToProps)(
+  withCookies(Login)
+);

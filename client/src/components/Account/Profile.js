@@ -1,43 +1,48 @@
 import React from "react";
-import { connect } from "react-redux";
 import {
   updateProfile,
   changePassword,
   deleteAccount
 } from "../../actions/auth";
 import Messages from "../Messages";
-import { string, object, func } from "prop-types";
+import { object, instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapMessageContextToProps,
+  mapSessionContextToProps,
+  messageContextPropType,
+  sessionContextPropType
+} from "../context_helper";
 
 class Profile extends React.Component {
   static propTypes = {
-    token: string.isRequired,
-    messages: object.isRequired,
-    onMount: func,
-    onUnmount: func,
-    history: object.isRequired
+    history: object.isRequired,
+    cookies: instanceOf(Cookies).isRequired,
+    ...messageContextPropType,
+    ...sessionContextPropType
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      email: props.user.email,
-      name: props.user.name,
-      gravatar: props.user.gravatar,
+      email: props.sessionContext.user.email,
+      name: props.sessionContext.user.name,
+      gravatar: props.sessionContext.user.gravatar,
       password: "",
       confirm: ""
     };
   }
 
-  componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.props.history);
-    }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      email: nextProps.sessionContext.user.email,
+      name: nextProps.sessionContext.user.name,
+      gravatar: nextProps.sessionContext.user.gravatar
+    };
   }
-
   componentWillUnmount() {
-    if (this.props.onUnmount) {
-      this.props.onUnmount(this.props.history);
-    }
+    this.props.messageContext.clearMessages();
   }
 
   handleChange(event) {
@@ -46,30 +51,31 @@ class Profile extends React.Component {
 
   handleProfileUpdate(event) {
     event.preventDefault();
-    this.props.dispatch(
-      updateProfile({ state: this.state, token: this.props.token })
-    );
+    updateProfile({
+      state: this.state,
+      sessionContext: this.props.sessionContext,
+      messageContext: this.props.messageContext
+    });
   }
 
   handleChangePassword(event) {
     event.preventDefault();
-    this.props.dispatch(
-      changePassword({
-        password: this.state.password,
-        confirm: this.state.confirm,
-        token: this.props.token
-      })
-    );
+    changePassword({
+      password: this.state.password,
+      confirm: this.state.confirm,
+      sessionContext: this.props.sessionContext,
+      messageContext: this.props.messageContext
+    });
   }
 
   handleDeleteAccount(event) {
     event.preventDefault();
-    this.props.dispatch(
-      deleteAccount({
-        token: this.props.token,
-        history: this.props.history
-      })
-    );
+    deleteAccount({
+      history: this.props.history,
+      cookies: this.props.cookies,
+      sessionContext: this.props.sessionContext,
+      messageContext: this.props.messageContext
+    });
   }
 
   render() {
@@ -77,7 +83,7 @@ class Profile extends React.Component {
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
+            <Messages messages={this.props.messageContext.messages} />
             <form
               onSubmit={this.handleProfileUpdate.bind(this)}
               className="form-horizontal"
@@ -208,12 +214,13 @@ class Profile extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapContextToProps = context => {
   return {
-    token: state.auth.token,
-    user: state.auth.user,
-    messages: state.messages
+    ...mapSessionContextToProps(context),
+    ...mapMessageContextToProps(context)
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+export default subscribe(ProviderContext, mapContextToProps)(
+  withCookies(Profile)
+);

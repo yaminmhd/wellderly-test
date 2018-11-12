@@ -1,31 +1,34 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { withCookies, Cookies } from "react-cookie";
 import { logout } from "../actions/auth";
 import { withRouter } from "react-router";
-import { object, shape, string } from "prop-types";
+import { object, instanceOf } from "prop-types";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapSessionContextToProps,
+  sessionContextPropType
+} from "../components/context_helper";
 
 class Header extends React.Component {
   static propTypes = {
     history: object.isRequired,
-    user: shape({
-      picture: string,
-      gravatar: string,
-      name: string,
-      email: string,
-      id: string
-    }),
-    token: string
+    cookies: instanceOf(Cookies).isRequired,
+    ...sessionContextPropType
   };
 
   handleLogout(event) {
     event.preventDefault();
-    this.props.dispatch(logout({ history: this.props.history }));
+    logout({
+      history: this.props.history,
+      cookies: this.props.cookies,
+      sessionContext: this.props.sessionContext
+    });
   }
 
   render() {
     const active = { borderBottomColor: "#3f51b5" };
-    const rightNav = this.props.token ? (
+    const rightNav = this.props.sessionContext.token ? (
       <ul className="nav navbar-nav navbar-right">
         <li className="dropdown">
           <a
@@ -35,11 +38,14 @@ class Header extends React.Component {
           >
             <img
               alt="avatar"
-              src={this.props.user.picture || this.props.user.gravatar}
+              src={
+                this.props.sessionContext.user.picture ||
+                this.props.sessionContext.user.gravatar
+              }
             />{" "}
-            {this.props.user.name ||
-              this.props.user.email ||
-              this.props.user.id}{" "}
+            {this.props.sessionContext.user.name ||
+              this.props.sessionContext.user.email ||
+              this.props.sessionContext.user.id}{" "}
             <i className="caret" />
           </a>
           <ul className="dropdown-menu">
@@ -104,11 +110,10 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-    user: state.auth.user
-  };
+const mapContextToProps = context => {
+  return mapSessionContextToProps(context);
 };
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(
+  subscribe(ProviderContext, mapContextToProps)(withCookies(Header))
+);

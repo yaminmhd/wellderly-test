@@ -1,16 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import { signup } from "../../actions/auth";
-import { object, func } from "prop-types";
+import { object, instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
 import Messages from "../Messages";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapMessageContextToProps,
+  mapSessionContextToProps,
+  messageContextPropType,
+  sessionContextPropType
+} from "../context_helper";
 
 class Signup extends React.Component {
   static propTypes = {
     history: object.isRequired,
-    messages: object.isRequired,
-    onMount: func,
-    onUnmount: func
+    cookies: instanceOf(Cookies).isRequired,
+    ...messageContextPropType,
+    ...sessionContextPropType
   };
 
   constructor(props) {
@@ -18,16 +25,8 @@ class Signup extends React.Component {
     this.state = { name: "", email: "", password: "" };
   }
 
-  componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.props.history);
-    }
-  }
-
   componentWillUnmount() {
-    if (this.props.onUnmount) {
-      this.props.onUnmount(this.props.history);
-    }
+    this.props.messageContext.clearMessages();
   }
 
   handleChange(event) {
@@ -36,14 +35,15 @@ class Signup extends React.Component {
 
   handleSignup(event) {
     event.preventDefault();
-    this.props.dispatch(
-      signup({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-        history: this.props.history
-      })
-    );
+    signup({
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      history: this.props.history,
+      cookies: this.props.cookies,
+      messageContext: this.props.messageContext,
+      sessionContext: this.props.sessionContext
+    });
   }
 
   render() {
@@ -51,7 +51,7 @@ class Signup extends React.Component {
       <div className="login-container container">
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
+            <Messages messages={this.props.messageContext.messages} />
             <form onSubmit={this.handleSignup.bind(this)}>
               <legend>Create an account</legend>
               <div className="form-group">
@@ -114,10 +114,13 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapContextToProps = context => {
   return {
-    messages: state.messages
+    ...mapSessionContextToProps(context),
+    ...mapMessageContextToProps(context)
   };
 };
 
-export default connect(mapStateToProps)(Signup);
+export default subscribe(ProviderContext, mapContextToProps)(
+  withCookies(Signup)
+);

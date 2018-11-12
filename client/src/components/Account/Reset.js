@@ -1,8 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
 import { resetPassword } from "../../actions/auth";
 import Messages from "../Messages";
-import { object, shape, string, func } from "prop-types";
+import { object, shape, string } from "prop-types";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapMessageContextToProps,
+  messageContextPropType
+} from "../context_helper";
 
 class Reset extends React.Component {
   static propTypes = {
@@ -10,9 +14,7 @@ class Reset extends React.Component {
     params: shape({
       token: string.isRequired
     }).isRequired,
-    messages: object.isRequired,
-    onMount: func,
-    onUnmount: func
+    ...messageContextPropType
   };
 
   constructor(props) {
@@ -20,16 +22,8 @@ class Reset extends React.Component {
     this.state = { password: "", confirm: "" };
   }
 
-  componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.props.history);
-    }
-  }
-
   componentWillUnmount() {
-    if (this.props.onUnmount) {
-      this.props.onUnmount(this.props.history);
-    }
+    this.props.messageContext.clearMessages();
   }
 
   handleChange(event) {
@@ -38,14 +32,13 @@ class Reset extends React.Component {
 
   handleReset(event) {
     event.preventDefault();
-    this.props.dispatch(
-      resetPassword({
-        password: this.state.password,
-        confirm: this.state.confirm,
-        token: this.props.match.params.token,
-        history: this.props.history
-      })
-    );
+    resetPassword({
+      password: this.state.password,
+      confirm: this.state.confirm,
+      token: this.props.match.params.token,
+      history: this.props.history,
+      messageContext: this.props.messageContext
+    });
   }
 
   render() {
@@ -53,7 +46,7 @@ class Reset extends React.Component {
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
+            <Messages messages={this.props.messageContext.messages} />
             <form onSubmit={this.handleReset.bind(this)}>
               <legend>Reset Password</legend>
               <div className="form-group">
@@ -94,8 +87,8 @@ class Reset extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return state;
+const mapContextToProps = context => {
+  return mapMessageContextToProps(context);
 };
 
-export default connect(mapStateToProps)(Reset);
+export default subscribe(ProviderContext, mapContextToProps)(Reset);

@@ -1,14 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
 import { forgotPassword } from "../../actions/auth";
 import Messages from "../Messages";
-import { object, func } from "prop-types";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapMessageContextToProps,
+  messageContextPropType
+} from "../context_helper";
 
 class Forgot extends React.Component {
   static propTypes = {
-    messages: object.isRequired,
-    onMount: func,
-    onUnmount: func
+    ...messageContextPropType
   };
 
   constructor(props) {
@@ -16,16 +17,8 @@ class Forgot extends React.Component {
     this.state = { email: "" };
   }
 
-  componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.props.history);
-    }
-  }
-
   componentWillUnmount() {
-    if (this.props.onUnmount) {
-      this.props.onUnmount(this.props.history);
-    }
+    this.props.messageContext.clearMessages();
   }
 
   handleChange(event) {
@@ -34,7 +27,10 @@ class Forgot extends React.Component {
 
   handleForgot(event) {
     event.preventDefault();
-    this.props.dispatch(forgotPassword({ email: this.state.email }));
+    forgotPassword({
+      email: this.state.email,
+      messageContext: this.props.messageContext
+    });
   }
 
   render() {
@@ -42,7 +38,7 @@ class Forgot extends React.Component {
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
+            <Messages messages={this.props.messageContext.messages} />
             <form onSubmit={this.handleForgot.bind(this)}>
               <legend>Forgot Password</legend>
               <div className="form-group">
@@ -73,10 +69,8 @@ class Forgot extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    messages: state.messages
-  };
+const mapContextToProps = context => {
+  return mapMessageContextToProps(context);
 };
 
-export default connect(mapStateToProps)(Forgot);
+export default subscribe(ProviderContext, mapContextToProps)(Forgot);

@@ -37,7 +37,11 @@ if (!isProduction) {
 }
 
 if (!isMongooseConnectionProvided) {
-  mongoose.connect(dbUri);
+  mongoose.connect(
+    dbUri,
+    { useNewUrlParser: true }
+  );
+  mongoose.set("useCreateIndex", true);
   if (!isProduction) {
     mongoose.set("debug", true);
   }

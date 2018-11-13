@@ -15,7 +15,10 @@ const setup = async () => {
   const mongoUri = await mongoServer.getConnectionString();
   const opts = {};
   await mongoose
-    .connect(mongoUri, opts)
+    .connect(
+      mongoUri,
+      opts
+    )
     .then(
       () => console.log("Mongo DB is ready."),
       error => console.error(error)

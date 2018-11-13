@@ -9,6 +9,7 @@ const path = require("path");
 
 const {
   isProduction,
+  isLocal,
   isMongooseConnectionProvided,
   dbUri
 } = require("./config");
@@ -28,7 +29,7 @@ app.use(require("method-override")());
 
 const staticFiles = express.static(path.join(__dirname, "../client/build"));
 
-if (isProduction) {
+if (!isLocal) {
   app.use(staticFiles);
 }
 

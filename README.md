@@ -120,4 +120,3 @@ While working on this project, I learnt a lot of useful tips from the following 
 - [megaboilerplate](https://github.com/sahat/megaboilerplate/)
 - [node-express-realworld-example-app](https://github.com/gothinkster/node-express-realworld-example-app)
 - [Running Create React App and Express (CRAE) on Heroku](https://originmaster.com/running-create-react-app-and-express-crae-on-heroku-c39a39fe7851)
-- Hello

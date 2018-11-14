@@ -89,7 +89,7 @@ You need to configure the environment variables you have put in the `server/.env
 // login to Heroku (if you aren't already)
 heroku login
 
-// create your heroku project, make sure to replace name-of-my-app, // with the actual name of your app. Note, this name must be unique // across of all heroku. 
+// create your heroku project, make sure to replace name-of-my-app, // with the actual name of your app. Note, this name must be unique // across of all heroku.
 heroku create name-of-my-app
 
 // add the latest nodejs build pack to our project
@@ -116,6 +116,8 @@ heroku open
 ## Thanks
 
 While working on this project, I learnt a lot of useful tips from the following projects:
+
 - [megaboilerplate](https://github.com/sahat/megaboilerplate/)
 - [node-express-realworld-example-app](https://github.com/gothinkster/node-express-realworld-example-app)
 - [Running Create React App and Express (CRAE) on Heroku](https://originmaster.com/running-create-react-app-and-express-crae-on-heroku-c39a39fe7851)
+- Hello

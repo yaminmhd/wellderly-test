@@ -4,6 +4,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
+
+    environment:
+      TEST_REPORTS: /tmp/test-reports
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
@@ -19,11 +22,15 @@ jobs:
           name: Run Test
           environment:
             JEST_JUNIT_OUTPUT: test/js-test-results.xml
-          command: npm test -- --ci --testResultsProcessor="jest-junit"
+          command: |
+            set -xu
+            mkdir -p /tmp/artifacts
+            mkdir -p /tmp/artifacts
+            npm test -- --ci --testResultsProcessor="jest-junit"
       - store_artifacts:
-          path: test
+          path: /tmp/artifacts
       - store_test_results:
-          path: test
+          path: /tmp/test-reports
 
   deploy-auto:
     docker:

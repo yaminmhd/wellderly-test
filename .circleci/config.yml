@@ -27,7 +27,7 @@ jobs:
           name: Run Test
           command: |
             ./cc-test-reporter before-build
-            npm test:ci
+            npm run test:ci
             ./cc-test-reporter after-build --exit-code $?
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"

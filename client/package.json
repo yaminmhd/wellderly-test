@@ -39,10 +39,6 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
     "coverageThreshold": {
       "global": {
         "branches": 80,

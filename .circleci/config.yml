@@ -30,10 +30,10 @@ jobs:
             npm run test:client -- --ci --testResultsProcessor="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
+      - store_test_artifacts:
+          path: target/junit
       - store_test_results:
-          path: reports/junit
-      - store_artifacts:
-          path: reports/junit
+          path: target/junit
   deploy-auto:
     docker:
       - image: buildpack-deps:trusty

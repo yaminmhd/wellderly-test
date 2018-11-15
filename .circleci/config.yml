@@ -20,13 +20,13 @@ jobs:
             - ./node_modules
       - run: # run tests
           name: Run Test
-          environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
           command: |
             set -xu
             mkdir -p ${TEST_REPORTS}
             mkdir -p /tmp/artifacts
             npm test -- --ci --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: "tmp/test-reports/js-test-results.xml"
       - store_artifacts:
           path: /tmp/artifacts
       - store_test_results:

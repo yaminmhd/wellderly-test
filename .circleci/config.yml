@@ -16,6 +16,7 @@ jobs:
           command: |
             npm install
             mkdir /tmp/artifacts;
+            ls -la;
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -24,6 +25,8 @@ jobs:
           name: Run backend tests
           command: |
             npm run test:server
+          environment:
+            JEST_JUNIT_OUTPUT: "tmp/artifacts/junit.xml"
       - run:
           name: Run frontend tests
           command: |

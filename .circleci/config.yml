@@ -37,7 +37,7 @@ jobs:
           path: test/junit/test-results.xml
           destination: test-results
       - store_test_results:
-          path: test
+          path: test/junit
 
   deploy-auto:
     docker:

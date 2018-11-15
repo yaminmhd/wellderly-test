@@ -1,98 +1,98 @@
-<testsuites name="jest tests" tests="41" failures="0" time="4.319">
-  <testsuite name="User model" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="2.537" tests="21">
-    <testcase classname="User model can be saved" name="User model can be saved" time="0.043">
+<testsuites name="jest tests" tests="41" failures="0" time="4.875">
+  <testsuite name="User model" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="2.815" tests="21">
+    <testcase classname="User model can be saved" name="User model can be saved" time="0.048">
     </testcase>
     <testcase classname="User model should have createdAt and updatedAt timestamp after being saved" name="User model should have createdAt and updatedAt timestamp after being saved" time="0.002">
     </testcase>
-    <testcase classname="User model can be searched by _id" name="User model can be searched by _id" time="0.013">
+    <testcase classname="User model can be searched by _id" name="User model can be searched by _id" time="0.018">
     </testcase>
-    <testcase classname="User model can be searched by name" name="User model can be searched by name" time="0.003">
+    <testcase classname="User model can be searched by name" name="User model can be searched by name" time="0.006">
     </testcase>
-    <testcase classname="User model can be searched by email" name="User model can be searched by email" time="0.003">
+    <testcase classname="User model can be searched by email" name="User model can be searched by email" time="0.004">
     </testcase>
-    <testcase classname="User model can be updated" name="User model can be updated" time="0.009">
+    <testcase classname="User model can be updated" name="User model can be updated" time="0.01">
     </testcase>
-    <testcase classname="User model can be deleted" name="User model can be deleted" time="0.005">
+    <testcase classname="User model can be deleted" name="User model can be deleted" time="0.006">
     </testcase>
-    <testcase classname="Users have unique emails should not allow two users with the same email" name="Users have unique emails should not allow two users with the same email" time="0.01">
+    <testcase classname="Users have unique emails should not allow two users with the same email" name="Users have unique emails should not allow two users with the same email" time="0.012">
     </testcase>
-    <testcase classname="Users have unique emails should allow to create another user with unique email" name="Users have unique emails should allow to create another user with unique email" time="0.007">
+    <testcase classname="Users have unique emails should allow to create another user with unique email" name="Users have unique emails should allow to create another user with unique email" time="0.008">
     </testcase>
     <testcase classname="Two different users can have same names can allow two users with the same name" name="Two different users can have same names can allow two users with the same name" time="0.01">
     </testcase>
-    <testcase classname="The User model has some required fields email is required" name="The User model has some required fields email is required" time="0.004">
+    <testcase classname="The User model has some required fields email is required" name="The User model has some required fields email is required" time="0.003">
     </testcase>
-    <testcase classname="Users can have some optional attributes can have optional name field" name="Users can have some optional attributes can have optional name field" time="0.008">
+    <testcase classname="Users can have some optional attributes can have optional name field" name="Users can have some optional attributes can have optional name field" time="0.011">
     </testcase>
-    <testcase classname="Users can have some optional attributes can have optional picture field" name="Users can have some optional attributes can have optional picture field" time="0.006">
+    <testcase classname="Users can have some optional attributes can have optional picture field" name="Users can have some optional attributes can have optional picture field" time="0.007">
     </testcase>
-    <testcase classname="Users can have some optional attributes the picture field should be strings" name="Users can have some optional attributes the picture field should be strings" time="0.008">
+    <testcase classname="Users can have some optional attributes the picture field should be strings" name="Users can have some optional attributes the picture field should be strings" time="0.007">
     </testcase>
-    <testcase classname="Some fields in User model are case insensitive email is case insensitive" name="Some fields in User model are case insensitive email is case insensitive" time="0.007">
+    <testcase classname="Some fields in User model are case insensitive email is case insensitive" name="Some fields in User model are case insensitive email is case insensitive" time="0.01">
     </testcase>
-    <testcase classname="Some of the fields in User Model have required format email should follow the normal email format" name="Some of the fields in User Model have required format email should follow the normal email format" time="0.002">
+    <testcase classname="Some of the fields in User Model have required format email should follow the normal email format" name="Some of the fields in User Model have required format email should follow the normal email format" time="0.006">
     </testcase>
-    <testcase classname="Setting and validation of password field on User model should save user passwords into hashedPassword of User model" name="Setting and validation of password field on User model should save user passwords into hashedPassword of User model" time="0.095">
+    <testcase classname="Setting and validation of password field on User model should save user passwords into hashedPassword of User model" name="Setting and validation of password field on User model should save user passwords into hashedPassword of User model" time="0.102">
     </testcase>
-    <testcase classname="Setting and validation of password field on User model should be able to verify user password afterwards" name="Setting and validation of password field on User model should be able to verify user password afterwards" time="0.084">
+    <testcase classname="Setting and validation of password field on User model should be able to verify user password afterwards" name="Setting and validation of password field on User model should be able to verify user password afterwards" time="0.082">
     </testcase>
-    <testcase classname="JWT tokens JWT tokens can be generated and verified" name="JWT tokens JWT tokens can be generated and verified" time="0.011">
+    <testcase classname="JWT tokens JWT tokens can be generated and verified" name="JWT tokens JWT tokens can be generated and verified" time="0.015">
     </testcase>
-    <testcase classname="JWT tokens invalid JWT tokens cannot be verified" name="JWT tokens invalid JWT tokens cannot be verified" time="0.003">
+    <testcase classname="JWT tokens invalid JWT tokens cannot be verified" name="JWT tokens invalid JWT tokens cannot be verified" time="0.004">
     </testcase>
-    <testcase classname="Generate user profile as JSON should exclude JWT token in the response, if a request is neither for login nor sign up" name="Generate user profile as JSON should exclude JWT token in the response, if a request is neither for login nor sign up" time="0.007">
+    <testcase classname="Generate user profile as JSON should exclude JWT token in the response, if a request is neither for login nor sign up" name="Generate user profile as JSON should exclude JWT token in the response, if a request is neither for login nor sign up" time="0.009">
     </testcase>
   </testsuite>
-  <testsuite name="User forgets and resets his password" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.486" tests="4">
-    <testcase classname="User forgets and resets his password Reset password successfully" name="User forgets and resets his password Reset password successfully" time="0.309">
+  <testsuite name="User forgets and resets his password" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="3.875" tests="4">
+    <testcase classname="User forgets and resets his password Reset password successfully" name="User forgets and resets his password Reset password successfully" time="0.595">
     </testcase>
-    <testcase classname="Password reset token is only valid for one hour Reset password after the password reset token expires" name="Password reset token is only valid for one hour Reset password after the password reset token expires" time="0.027">
+    <testcase classname="Password reset token is only valid for one hour Reset password after the password reset token expires" name="Password reset token is only valid for one hour Reset password after the password reset token expires" time="0.025">
     </testcase>
     <testcase classname="Hacker tries to hack this system Don&apos;t tell hacker if an email is registered with the system or not" name="Hacker tries to hack this system Don&apos;t tell hacker if an email is registered with the system or not" time="0.007">
     </testcase>
     <testcase classname="Hacker tries to hack this system Reset password with invalid token" name="Hacker tries to hack this system Reset password with invalid token" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="Accessing User API without login" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.585" tests="7">
-    <testcase classname="Accessing User API without login Get information on the current user" name="Accessing User API without login Get information on the current user" time="0.038">
+  <testsuite name="New user registration" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="4.101" tests="2">
+    <testcase classname="New user registration Register a new user successfully" name="New user registration Register a new user successfully" time="0.133">
     </testcase>
-    <testcase classname="Accessing User API without login Update user profile" name="Accessing User API without login Update user profile" time="0.032">
+    <testcase classname="New user registration Register with duplicated email should fail" name="New user registration Register with duplicated email should fail" time="0.016">
+    </testcase>
+  </testsuite>
+  <testsuite name="Delete user account after login" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="4.112" tests="1">
+    <testcase classname="Delete user account after login Delete account of the current user" name="Delete user account after login Delete account of the current user" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="4.284" tests="1">
+    <testcase classname=" Change password on the current user" name=" Change password on the current user" time="0.328">
+    </testcase>
+  </testsuite>
+  <testsuite name="Accessing User API without login" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="4.304" tests="7">
+    <testcase classname="Accessing User API without login Get information on the current user" name="Accessing User API without login Get information on the current user" time="0.027">
+    </testcase>
+    <testcase classname="Accessing User API without login Update user profile" name="Accessing User API without login Update user profile" time="0.027">
     </testcase>
     <testcase classname="Accessing User API after login Get information on the current user" name="Accessing User API after login Get information on the current user" time="0.011">
     </testcase>
-    <testcase classname="Accessing User API after login Change name of the current user" name="Accessing User API after login Change name of the current user" time="0.105">
+    <testcase classname="Accessing User API after login Change name of the current user" name="Accessing User API after login Change name of the current user" time="0.097">
     </testcase>
-    <testcase classname="Accessing User API after login Update user picture" name="Accessing User API after login Update user picture" time="0.015">
+    <testcase classname="Accessing User API after login Update user picture" name="Accessing User API after login Update user picture" time="0.011">
     </testcase>
     <testcase classname="Accessing User API after login Update user email to be the same as another existing user" name="Accessing User API after login Update user email to be the same as another existing user" time="0.012">
     </testcase>
-    <testcase classname="Accessing User API after login Update user profile with no user information" name="Accessing User API after login Update user profile with no user information" time="0.006">
+    <testcase classname="Accessing User API after login Update user profile with no user information" name="Accessing User API after login Update user profile with no user information" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="Delete user account after login" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.607" tests="1">
-    <testcase classname="Delete user account after login Delete account of the current user" name="Delete user account after login Delete account of the current user" time="0.015">
+  <testsuite name="User authentication" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:55:16" time="4.337" tests="5">
+    <testcase classname="User authentication User login successfully" name="User authentication User login successfully" time="0.153">
     </testcase>
-  </testsuite>
-  <testsuite name="New user registration" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.644" tests="2">
-    <testcase classname="New user registration Register a new user successfully" name="New user registration Register a new user successfully" time="0.153">
-    </testcase>
-    <testcase classname="New user registration Register with duplicated email should fail" name="New user registration Register with duplicated email should fail" time="0.011">
-    </testcase>
-  </testsuite>
-  <testsuite name="User authentication" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.686" tests="5">
-    <testcase classname="User authentication User login successfully" name="User authentication User login successfully" time="0.156">
-    </testcase>
-    <testcase classname="User authentication Login with missing user email" name="User authentication Login with missing user email" time="0.01">
+    <testcase classname="User authentication Login with missing user email" name="User authentication Login with missing user email" time="0.007">
     </testcase>
     <testcase classname="User authentication Login with invalid user email" name="User authentication Login with invalid user email" time="0.007">
     </testcase>
-    <testcase classname="User authentication Login with missing user password" name="User authentication Login with missing user password" time="0.009">
+    <testcase classname="User authentication Login with missing user password" name="User authentication Login with missing user password" time="0.004">
     </testcase>
-    <testcase classname="User authentication Login with invalid password" name="User authentication Login with invalid password" time="0.083">
-    </testcase>
-  </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-15T15:52:35" time="3.746" tests="1">
-    <testcase classname=" Change password on the current user" name=" Change password on the current user" time="0.318">
+    <testcase classname="User authentication Login with invalid password" name="User authentication Login with invalid password" time="0.092">
     </testcase>
   </testsuite>
 </testsuites>

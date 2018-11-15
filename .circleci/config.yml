@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Run backend tests
           command: |
-            npm run test:server"
+            npm run test:server
           environment:
             JEST_JUNIT_OUTPUT: "/tmp/artifacts/js-test-results.xml"
             JEST_JUNIT_OUTPUT_DIR: "/tmp/artifacts"

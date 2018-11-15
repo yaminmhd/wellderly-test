@@ -16,8 +16,7 @@ jobs:
           command: |
             set -xu
             npm install
-            mkdir -p reports/junit;
-            mkdir -p reports/jest;
+            mkdir ~/test/junit
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -27,17 +26,18 @@ jobs:
           command: |
             npm run test:server
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/junit.xml"
+            JEST_JUNIT_OUTPUT: "test/junit/test-results.xml"
       - run:
           name: Run frontend tests
           command: |
             npm run test:client
           environment:
-            JEST_JUNIT_OUTPUT: "reports/jest/junit.xml"
+            JEST_JUNIT_OUTPUT: "test/junit/test-results.xml"
       - store_artifacts:
-          path: reports/junit
+          path: test/junit/test-results.xml
+          destination: test-results
       - store_test_results:
-          path: reports/junit
+          path: test
 
   deploy-auto:
     docker:

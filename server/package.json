@@ -7,6 +7,7 @@
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=local nodemon server.js",
     "test": "cross-env NODE_ENV=test jest",
+    "test:ci": "cross-env NODE_ENV=test jest --testResultsProcessor=jest-junit",
     "test:watch": "npm run test --watch",
     "test:coverage": "npm run test --coverage"
   },

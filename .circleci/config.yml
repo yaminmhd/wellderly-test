@@ -24,7 +24,7 @@ jobs:
             JEST_JUNIT_OUTPUT: test/js-test-results.xml
           command: |
             set -xu
-            mkdir -p /tmp/artifacts
+            mkdir -p ${TEST_REPORTS}
             mkdir -p /tmp/artifacts
             npm test -- --ci --testResultsProcessor="jest-junit"
       - store_artifacts:

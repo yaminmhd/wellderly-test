@@ -1,12 +1,12 @@
 # .circleci/config.yml
 version: 2
+default: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10
 jobs:
   build:
-    docker:
-      - image: circleci/node:10
-
-    environment:
-      TEST_REPORTS: /tmp/test-reports
+    <<: *defaults
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
@@ -14,28 +14,26 @@ jobs:
       - run:
           name: Setup Dependencies
           command: npm install
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: # run tests
-          name: Run Test
+      - run:
+          name: Run backend tests
           command: |
-            ./cc-test-reporter before-build
-            npm run test:ci
-            ./cc-test-reporter after-build --exit-code $?
+            npm test:server -- --ci --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
+      - run:
+          name: Run frontend tests
+          command: |
+            npm test:client -- --ci --testResultsProcessor="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
       - store_test_results:
-          path: coverage/junit
+          path: reports/junit
       - store_artifacts:
-          path: coverage
-
+          path: reports/junit
   deploy-auto:
     docker:
       - image: buildpack-deps:trusty

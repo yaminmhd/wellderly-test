@@ -17,9 +17,9 @@ jobs:
             - ./node_modules
       - run: # run tests
           name: Run Test
-          command: npm test -- --ci --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: npm test -- --ci --testResultsProcessor="jest-junit"
       - store_test_results:
           path: reports/junit
       - store_artifacts:

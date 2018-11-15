@@ -26,18 +26,17 @@ jobs:
           command: |
             npm run test:server
           environment:
-            JEST_JUNIT_OUTPUT: "tmp/artifacts/junit.xml"
+            JEST_JUNIT_OUTPUT: "reports/junit/junit.xml"
       - run:
           name: Run frontend tests
           command: |
             npm run test:client
           environment:
-            JEST_JUNIT_OUTPUT: "tmp/artifacts/junit.xml"
+            JEST_JUNIT_OUTPUT: "reports/jest/junit.xml"
       - store_artifacts:
-          path: /tmp/artifacts/js-test-results.xml
-          destination: artifact-file
+          path: reports/junit
       - store_test_results:
-          path: /tmp/artifacts
+          path: reports/junit
 
   deploy-auto:
     docker:

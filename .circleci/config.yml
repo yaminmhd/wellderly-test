@@ -16,8 +16,8 @@ jobs:
           command: |
             set -xu
             npm install
-            mkdir /reports/junit;
-            mkdir /reports/jest;
+            mkdir -p reports/junit;
+            mkdir -p reports/jest;
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:

@@ -27,6 +27,7 @@ jobs:
             mkdir -p ${TEST_REPORTS}
             mkdir -p /tmp/artifacts
             npm test -- --ci --testResultsProcessor="jest-junit"
+            cp out/tests/*.xml ${TEST_REPORTS}
       - store_artifacts:
           path: /tmp/artifacts
       - store_test_results:

@@ -35,9 +35,8 @@ jobs:
             JEST_JUNIT_OUTPUT: "test/junit/test-results.xml"
       - store_artifacts:
           path: test/junit/test-results.xml
-          destination: test-results
       - store_test_results:
-          path: ~/test/junit
+          path: test/junit
 
   deploy-auto:
     docker:

@@ -15,8 +15,8 @@ jobs:
           name: Setup Dependencies
           command: |
             set -xu
-            npm install
-            mkdir -p ~/test/junit
+            npm install;
+            mkdir -p test/junit;
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -37,7 +37,7 @@ jobs:
           path: test/junit/test-results.xml
           destination: test-results
       - store_test_results:
-          path: test/junit
+          path: ~/test/junit
 
   deploy-auto:
     docker:

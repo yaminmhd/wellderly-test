@@ -24,19 +24,18 @@ jobs:
           name: Run backend tests
           command: |
             npm run test:server
-          environment:
-            JEST_JUNIT_OUTPUT: "/tmp/artifacts/js-test-results.xml"
-            JEST_JUNIT_OUTPUT_DIR: "/tmp/artifacts"
       - run:
           name: Run frontend tests
           command: |
             npm run test:client
           environment:
-            JEST_JUNIT_OUTPUT: "/tmp/artifacts/js-test-results.xml"
-            JEST_JUNIT_OUTPUT_DIR: "/tmp/artifacts"
+            JEST_JUNIT_OUTPUT: "tmp/artifacts/junit.xml"
       - store_artifacts:
           path: /tmp/artifacts/js-test-results.xml
           destination: artifact-file
+      - store_test_results:
+          path: /tmp/artifacts
+
   deploy-auto:
     docker:
       - image: buildpack-deps:trusty

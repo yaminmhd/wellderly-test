@@ -21,13 +21,13 @@ jobs:
       - run:
           name: Run backend tests
           command: |
-            npm test:server -- --ci --testResultsProcessor="jest-junit"
+            npm run test:server -- --ci --testResultsProcessor="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
       - run:
           name: Run frontend tests
           command: |
-            npm test:client -- --ci --testResultsProcessor="jest-junit"
+            npm run test:client -- --ci --testResultsProcessor="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
       - store_test_results:

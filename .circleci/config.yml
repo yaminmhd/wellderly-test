@@ -1,7 +1,7 @@
 # .circleci/config.yml
 version: 2
 default: &defaults
-  working_directory: ~/repo
+  working_directory: /tmp
   docker:
     - image: circleci/node:10
 jobs:
@@ -13,7 +13,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Setup Dependencies
-          command: npm install
+          command: |
+            npm install
+            mkdir /tmp/artifacts;
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -23,17 +25,16 @@ jobs:
           command: |
             npm run test:server -- --ci --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: "/tmp/artifacts/js-test-results.xml"
       - run:
           name: Run frontend tests
           command: |
             npm run test:client -- --ci --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
-      - store_test_artifacts:
-          path: target/junit
-      - store_test_results:
-          path: target/junit
+            JEST_JUNIT_OUTPUT: "/tmp/artifacts/js-test-results.xml"
+      - store_artifacts:
+          path: /tmp/artifacts/js-test-results.xml
+          destination: artifact-file
   deploy-auto:
     docker:
       - image: buildpack-deps:trusty

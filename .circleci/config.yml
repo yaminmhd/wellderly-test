@@ -1,6 +1,8 @@
 # .circleci/config.yml
 version: 2
 default: &defaults
+  environment:
+    TEST_REPORTS: /tmp/test-reports
   working_directory: ~/repo
   docker:
     - image: circleci/node:10
@@ -14,9 +16,7 @@ jobs:
       - run:
           name: Setup Dependencies
           command: |
-            set -xu
-            npm install;
-            mkdir -p test/junit;
+            npm install
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -24,19 +24,23 @@ jobs:
       - run:
           name: Run backend tests
           command: |
+            set -xu
+            mkdir -p ${TEST_REPORTS}
             npm run test:server
+            cp ./server/*.xml ${TEST_REPORTS}
           environment:
-            JEST_JUNIT_OUTPUT: "test/junit/test-results.xml"
+            JEST_JUNIT_OUTPUT: "tmp/test-reports/test-results.xml"
       - run:
           name: Run frontend tests
           command: |
             npm run test:client
+            cp ./client/*.xml ${TEST_REPORTS}
           environment:
-            JEST_JUNIT_OUTPUT: "test/junit/test-results.xml"
+            JEST_JUNIT_OUTPUT: "tmp/test-reports/test-results.xml"
       - store_artifacts:
-          path: test/junit/test-results.xml
+          path: tmp/test-reports
       - store_test_results:
-          path: test/junit
+          path: tmp/test-reports
 
   deploy-auto:
     docker:

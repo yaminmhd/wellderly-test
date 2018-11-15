@@ -40,5 +40,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "dependencies": {
+    "jest": "^23.6.0"
   }
 }

@@ -18,12 +18,13 @@ jobs:
       - run: # run tests
           name: Run Test
           environment:
-            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+            JEST_JUNIT_OUTPUT: test/js-test-results.xml
           command: npm test -- --ci --testResultsProcessor="jest-junit"
-      - store_test_results:
-          path: reports/junit
       - store_artifacts:
-          path: reports/junit
+          path: test
+      - store_test_results:
+          path: test
+
   deploy-auto:
     docker:
       - image: buildpack-deps:trusty
